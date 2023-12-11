@@ -1,10 +1,11 @@
 import ArticleList from "./ArticleList"
 
+
 const Home =()=>{
     return(
         <>
         <ArticleList/>
-
+        
         </>
     )
 }

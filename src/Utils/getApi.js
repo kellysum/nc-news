@@ -11,3 +11,11 @@ export const getArticles = () =>{
         return data.articles
     })
 }
+
+export const getArticlesById =(article_id)=>{
+    return ncNewsApi
+    .get(`/api/articles/${article_id}`)
+    .then(({data})=>{
+        return data.articles
+    })
+}
