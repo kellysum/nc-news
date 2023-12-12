@@ -23,7 +23,8 @@ const SingleArticle = () => {
     return (
         <div>
             <h2>{singleArticle.title}</h2>
-            <Vote initialVotes={singleArticle.votes} />
+            <Vote article_id={singleArticle.article_id}
+            initialVotes={singleArticle.votes} />
             <img src={singleArticle.article_img_url}  alt='Illustration related to the article topic' width='400px' height='250px' border='5px'/>
             <p className='individualArticleBody'>{singleArticle.body}</p>
             <p className='individualArticleAuthor'>Author: {singleArticle.author}</p>
