@@ -2,6 +2,7 @@ h1{
     color: rgb(14, 90, 176);
     font-weight: bolder;
     font-size: 50px;
+   
 }
 
 nav{
@@ -10,6 +11,8 @@ nav{
     font-weight: bolder;
     font-size: 20px;
     list-style:none;
+    border: white;
+    border-radius: 20px;
 }
 
 ul{
@@ -18,7 +21,8 @@ list-style: none;
 
 h2{
     background-color: antiquewhite;
-    margin
+    border: white;
+    border-radius: 20px;
 }
 
 .article_list{
@@ -32,4 +36,27 @@ margin-bottom: 20px;
 font-size: 25px;
 background-color: rgb(147, 182, 235);
 
+}
+
+.individualArticleBody{
+    border:solid white;
+    background-color:rgb(202, 232, 251) ;
+    font-size: 30px;
+    border-radius: 20px;
+    margin:10px;
+    padding: 10px;
+}
+
+.individualArticleAuthor{
+    border:solid white;
+    background-color:rgb(202, 232, 251) ;
+    font-size: 20px;
+    border-radius: 20px;
+    margin:10px;
+    padding: 10px;
+}
+
+img{
+    margin:20px;
+    border-color: bisque;
 }

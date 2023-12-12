@@ -22,8 +22,11 @@ const SingleArticle = () => {
     return (
         <div>
             <h2>{singleArticle.title}</h2>
-            <p>{singleArticle.body}</p>
-            <p>Author: {singleArticle.author}</p>
+            <img src={singleArticle.article_img_url}  alt='Illustration related to the article topic' width='400px' height='250px' border='5px'/>
+            <p className='individualArticleBody'>{singleArticle.body}</p>
+            <p className='individualArticleAuthor'>Author: {singleArticle.author}</p>
+            <p className='individualArticleAuthor'>Topic: {singleArticle.topic}</p>
+
         </div>
     );
 };

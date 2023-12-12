@@ -6,23 +6,26 @@ import {Link} from 'react-router-dom'
 
 const ArticleList = ()=>{
     const [articles, setArticles] = useState([])
-
+    const [loading, setLoading] = useState(true);
+    
     useEffect(()=>{
         getArticles().then((data)=>{
-           
-            setArticles(data)
+           setArticles(data)
+           setLoading(false)
         })
     }, [])
+
+    if(loading){
+        return <div>Loading...</div>
+    }
 
     return (
         <div>
             <h2>All Articles</h2>
             <ul className="article_list">
-                {articles.map((article) => (
+            {articles.map((article) => (
                     <li key={article.article_id}>
-                        <Link to={`/articles/${article.article_id}`}>
-                            <ArticleCard article={article} />
-                        </Link>
+                        <ArticleCard article={article} />
                     </li>
                 ))}
             </ul>
