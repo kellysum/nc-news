@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 const ArticleCard = ({ article }) => {
     return (
-        <li className="article-card">
+        <p className="article-card">
             <Link to={`/articles/${article.article_id}`}>
-                <h3>{article.title}</h3>
+                {article.title}
             </Link>
             <p>Author: {article.author}</p>
             <p>Topic: {article.topic}</p>
-        </li>
+        </p>
     );
 };
 

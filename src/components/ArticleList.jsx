@@ -2,6 +2,7 @@ import {useState, useEffect} from "react"
 import ArticleCard from "./ArticleCard"
 import { getArticles } from "../Utils/getApi"
 import {Link} from 'react-router-dom'
+import FancyBox from "./FancyBox"
 
 
 const ArticleList = ()=>{
@@ -25,8 +26,10 @@ const ArticleList = ()=>{
             <ul className="article_list">
             {articles.map((article) => (
                     <li key={article.article_id}>
+                        <FancyBox>
                         <ArticleCard article={article} />
-                    </li>
+                   </FancyBox> 
+                   </li>
                 ))}
             </ul>
         </div>
