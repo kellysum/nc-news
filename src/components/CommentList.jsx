@@ -23,6 +23,9 @@ const CommentList = () => {
     return (
         <div>
             <p className='comment-title'>Comments</p>
+            {comments.length === 0 ? (
+                <p className='noCommentMsg'>No comments yet for this article.</p>
+            ) : (
             <ul className="comment-list">
                 {comments.map((comment) => (
                     <FancyBox>
@@ -30,7 +33,8 @@ const CommentList = () => {
                     </FancyBox>
                 ))}
             </ul>
-        </div>
+            )}
+       </div>
     );
 };
 
