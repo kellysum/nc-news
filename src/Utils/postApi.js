@@ -5,7 +5,7 @@ const ncNewsApi = axios.create({
 })
 
 export const postComment =(article_id, addComments)=>{
-    return ncNewsApi
+   return ncNewsApi
     .post(`/api/articles/${article_id}/comments`, addComments)
     .then(response => {
        

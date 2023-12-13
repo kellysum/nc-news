@@ -3,13 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { postComment } from "../Utils/postApi";
 import { useParams } from 'react-router-dom';
 
-
 const CommentAdder = () => {
     const { article_id } = useParams();
     const navigate = useNavigate();
     const [addComments, setNewComment] = useState({
         comment: "",
-        username: "",
+        username: "testUser",
     });
     const [isPosting, setIsPosting] = useState(false);
     const [comments, setComments] = useState([]); 
@@ -24,20 +23,20 @@ const CommentAdder = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (!addComments.username || !addComments.comment) {
+        if (!addComments.comment) {
             alert("Please fill out all fields!");
             return;
         }
 
         setIsPosting(true);
-        
 
         postComment(article_id, addComments)
             .then((newCommentList) => {
-               setNewComment("")
-                setComments((currComment)=>{
-                    return[newCommentList, ...currComment]
-                })
+                setNewComment({ 
+                    comment: "",
+                    username: "testUser", 
+                });
+                setComments([newCommentList, ...comments]);
                 setIsPosting(false);
                 alert("Comment posted successfully!");
                 navigate(`/articles/${article_id}`);
@@ -45,7 +44,6 @@ const CommentAdder = () => {
             .catch((error) => {
                 setIsPosting(false);
                 alert("Failed to post comment. Please try again.");
-                setComments(comments); 
                 console.error("Error posting comment:", error);
             });
     };
