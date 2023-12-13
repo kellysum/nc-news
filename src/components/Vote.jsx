@@ -8,30 +8,28 @@ const Vote = ({ article_id, initialVotes }) => {
 
   const handleVote = () => {
     let inc_votes;
-
+  
     if (hasVoted) {
       inc_votes = -1;
+      setHasVoted(false);
     } else {
-      inc_votes = 1; 
+      inc_votes = 1;
+      setHasVoted(true);
     }
-
-    
-    setVotes(votes + inc_votes);
-    setHasVoted(!hasVoted); 
-
+  
+    setVotes((prevVotes) => prevVotes + inc_votes);
+  
     updateArticleVotes(article_id, inc_votes)
       .then(() => {
-        
-        setVoteError(null); 
+        setVoteError(null);
       })
       .catch((error) => {
-       
-        setVotes(votes - inc_votes);
-        setHasVoted(!hasVoted); 
+        setVotes((prevVotes) => prevVotes - inc_votes);
         setVoteError('Failed to update votes. Please try again.');
         console.error('Error updating votes:', error);
       });
   };
+  
 
   return (
     <div className="vote-count">
