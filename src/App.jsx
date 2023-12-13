@@ -5,6 +5,10 @@ import Home from './components/Home'
 import Nav from './components/Nav'
 import SingleArticlePage from './components/SingleArticlePage';
 
+import TopicPage from './components/TopicPage';
+
+import TopicArticlesPage from './components/TopicArticles';
+
 function App() {
  
 
@@ -16,6 +20,9 @@ function App() {
    <Routes>
     <Route path='/' element={<Home/>}/>
     <Route path='/articles/:article_id' element={<SingleArticlePage/>}/>
+   <Route path='/topics' element={<TopicPage/>}/>
+   <Route path='/topics/:slug' element={<TopicArticlesPage/>}/>
+
    </Routes>
 
     </BrowserRouter>
