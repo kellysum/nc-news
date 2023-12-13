@@ -19,7 +19,7 @@ const DeleteComment = ({ comment_id, commentAuthor, onDelete }) => {
       .then(() => {
         setIsDeleting(false);
         setDeleteSuccess(true);
-        onDelete(commentId);
+        onDelete(comment_id);
         setTimeout(() => {
           setDeleteSuccess(false);
         }, 3000); 
