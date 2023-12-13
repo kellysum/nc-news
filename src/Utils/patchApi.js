@@ -7,5 +7,5 @@ const ncNewsApi = axios.create({
 
 export const updateArticleVotes = (article_id, inc_votes) => {
     return ncNewsApi
-    .patch(`/api/articles/${article_id}`, { votes: inc_votes });
+    .patch(`/api/articles/${article_id}`, { inc_votes:inc_votes});
 };

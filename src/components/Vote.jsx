@@ -4,29 +4,31 @@ import { updateArticleVotes } from '../Utils/patchApi';
 const Vote = ({ article_id, initialVotes }) => {
   const [votes, setVotes] = useState(initialVotes);
   const [voteError, setVoteError] = useState(null);
+  const [hasVoted, setHasVoted] = useState(false);
 
-  const handleVote = (voteType) => {
+  const handleVote = () => {
     let inc_votes;
 
-    if (voteType === 'upvote') {
-      inc_votes = 1;
-    } else if (voteType === 'downvote') {
+    if (hasVoted) {
       inc_votes = -1;
+    } else {
+      inc_votes = 1; 
     }
 
     
     setVotes(votes + inc_votes);
+    setHasVoted(!hasVoted); 
 
     updateArticleVotes(article_id, inc_votes)
       .then(() => {
         
-        setVotes(votes + inc_votes);
         setVoteError(null); 
       })
       .catch((error) => {
        
-        setVotes(votes);
-        setVoteError('Failed to update votes. Please try again.'); 
+        setVotes(votes - inc_votes);
+        setHasVoted(!hasVoted); 
+        setVoteError('Failed to update votes. Please try again.');
         console.error('Error updating votes:', error);
       });
   };
@@ -35,11 +37,9 @@ const Vote = ({ article_id, initialVotes }) => {
     <div className="vote-count">
       <p>Votes: {votes}</p>
       {voteError && <p className="error-message">{voteError}</p>}
-      <button onClick={() => handleVote('upvote')}>Vote👍</button>
-      <button onClick={() => handleVote('downvote')}>Downvote👎</button>
+      <button onClick={handleVote}>{hasVoted ? 'Undo👎' : '👍'}</button>
     </div>
   );
 };
 
 export default Vote;
-
