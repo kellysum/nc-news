@@ -1,74 +1,81 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import  { useState, useEffect } from "react";
 import { postComment } from "../Utils/postApi";
-import { useParams } from 'react-router-dom';
+import { getCommentsByArticleId } from "../Utils/getApi";
+import { useParams } from "react-router-dom";
+import CommentList from "./CommentList";
+import CommentCard from "./CommentCard";
 
 const CommentAdder = () => {
     const { article_id } = useParams();
-    const navigate = useNavigate();
-    const [addComments, setNewComment] = useState({
-        comment: "",
-        username: "testUser",
-    });
+    const [comments, setComments] = useState([]);
+    const [addComments, setAddComments] = useState("");
+    const [error, setError] = useState(null);
     const [isPosting, setIsPosting] = useState(false);
-    const [comments, setComments] = useState([]); 
+    const [isLoading, setIsLoading] = useState(true);
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setNewComment({
-            ...addComments,
-            [name]: value,
-        });
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if (!addComments.comment) {
-            alert("Please fill out all fields!");
-            return;
-        }
-
-        setIsPosting(true);
-
-        postComment(article_id, addComments)
-            .then((newCommentList) => {
-                setNewComment({ 
-                    comment: "",
-                    username: "testUser", 
-                });
-                setComments([newCommentList, ...comments]);
-                setIsPosting(false);
-                alert("Comment posted successfully!");
-                navigate(`/articles/${article_id}`);
+    
+    useEffect(() => {
+        setIsLoading(true);
+        getCommentsByArticleId(article_id)
+            .then((data) => {
+                setComments(data);
+                setIsLoading(false);
             })
             .catch((error) => {
-                setIsPosting(false);
-                alert("Failed to post comment. Please try again.");
-                console.error("Error posting comment:", error);
+                console.error("Error getting comments:", error);
+                setIsLoading(false);
             });
-    };
+    }, [article_id]);
+
+    const handleSubmit = () => {
+    if (addComments.trim() !== "") {
+        const userName = "grumpy19";
+        const commentWithDefaultName = {
+            username: userName,
+            comment: addComments,
+        };
+
+        setIsPosting(true);
+        postComment(article_id, commentWithDefaultName)
+            .then((commentPosted) => {
+                setComments((prevComments) => [commentPosted, ...prevComments]);
+                setIsPosting(false);
+                setAddComments("");
+            })
+            .catch((error) => {
+                console.error("Error posting comment:", error);
+                setIsPosting(false);
+                setError("Failed to post comment. Please try again.");
+            });
+    } else {
+        setError("Please fill out all fields!");
+    }
+};
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                name="username"
-                value={addComments.username}
-                onChange={handleInputChange}
-                placeholder="Your Username"
-                required
-            />
+        <div>
+            <h3>Add Your Comments👇</h3>
             <textarea
-                name="comment"
-                value={addComments.comment}
-                onChange={handleInputChange}
-                placeholder="Write your comment here..."
-                required
-            />
-            <button type="submit" disabled={isPosting}>
+                value={addComments}
+                onChange={(event) => setAddComments(event.target.value)}
+                placeholder="Write your comments here..."
+            ></textarea>
+            <button onClick={handleSubmit} disabled={isPosting}>
                 {isPosting ? "Posting..." : "Post Comment"}
             </button>
-        </form>
+            {error && <p className="errormsg">{error}</p>}
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : (
+                <div>
+                    {comments.map((comment, index) => (
+                        <div key={index}>
+                            <p>{comment.username}: {comment.comment}</p> </div>
+                       
+                    ))}
+                </div>
+            )}
+        </div>
     );
 };
 
