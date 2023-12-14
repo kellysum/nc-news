@@ -26,7 +26,7 @@ const TopicArticlesPage = () => {
   const filteredArticles = selectedTopic
     ? articles.filter((article) => article.topic === selectedTopic)
     : articles;
-console.log(articles)
+
     
   return (
     <div>
