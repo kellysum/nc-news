@@ -1,19 +1,16 @@
-import  { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { postComment } from "../Utils/postApi";
 import { getCommentsByArticleId } from "../Utils/getApi";
 import { useParams } from "react-router-dom";
-import CommentList from "./CommentList";
-import CommentCard from "./CommentCard";
 
 const CommentAdder = () => {
-    const { article_id } = useParams();
+    const {article_id} = useParams()
     const [comments, setComments] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [addComments, setAddComments] = useState("");
     const [error, setError] = useState(null);
     const [isPosting, setIsPosting] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
 
-    
     useEffect(() => {
         setIsLoading(true);
         getCommentsByArticleId(article_id)
@@ -28,29 +25,33 @@ const CommentAdder = () => {
     }, [article_id]);
 
     const handleSubmit = () => {
-    if (addComments.trim() !== "") {
-        const userName = "grumpy19";
-        const commentWithDefaultName = {
-            username: userName,
-            comment: addComments,
-        };
+        if (addComments.trim() !== "") {
+            const userName = "grumpy19";
+            const commentWithDefaultName = {
+                username: userName,
+                comment: addComments,
+            };
 
-        setIsPosting(true);
-        postComment(article_id, commentWithDefaultName)
-            .then((commentPosted) => {
-                setComments((prevComments) => [commentPosted, ...prevComments]);
-                setIsPosting(false);
-                setAddComments("");
-            })
-            .catch((error) => {
-                console.error("Error posting comment:", error);
-                setIsPosting(false);
-                setError("Failed to post comment. Please try again.");
-            });
-    } else {
-        setError("Please fill out all fields!");
+            setIsPosting(true);
+            postComment(article_id, commentWithDefaultName)
+                .then((commentPosted) => {
+                    setComments([commentPosted, ...comments]);
+                    setIsPosting(false);
+                    setAddComments("");
+                })
+                .catch((error) => {
+                    console.error("Error posting comment:", error);
+                    setIsPosting(false);
+                    setError("Failed to post comment. Please try again.");
+                });
+        } else {
+            setError("Please fill out all fields!");
+        }
+    };
+
+    if (isLoading) {
+        return <p>Loading...</p>;
     }
-};
 
     return (
         <div>
@@ -64,17 +65,7 @@ const CommentAdder = () => {
                 {isPosting ? "Posting..." : "Post Comment"}
             </button>
             {error && <p className="errormsg">{error}</p>}
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : (
-                <div>
-                    {comments.map((comment, index) => (
-                        <div key={index}>
-                            <p>{comment.username}: {comment.comment}</p> </div>
-                       
-                    ))}
-                </div>
-            )}
+           
         </div>
     );
 };
