@@ -1,6 +1,7 @@
 
 import CommentAdder from "./CommentAdder"
 import CommentList from "./CommentList"
+import DeleteComment from "./DeleteComment"
 import SingleArticle from "./SingleArticle"
 
 
@@ -11,6 +12,7 @@ const SingleArticlePage =()=>{
         <SingleArticle/>
         <CommentAdder/>
         <CommentList/>
+        <DeleteComment/>
         </>
     )
 }
