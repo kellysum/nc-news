@@ -27,3 +27,11 @@ export const getCommentsByArticleId =(article_id)=>{
         return data.comments
 })
 }
+
+export const getTopics =()=>{
+    return ncNewsApi
+    .get('/api/topics')
+    .then(({data})=>{
+        return data.topics
+    })
+}
