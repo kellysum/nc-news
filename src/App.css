@@ -118,3 +118,7 @@ transition: transform 0.3s ease, box-shadow 0.3s ease;
 .voteCount{
     font-size: 18px;
 }
+
+.topic-article{
+    background-color: rgb(202, 232, 251);
+}
