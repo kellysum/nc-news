@@ -7,5 +7,13 @@ const ncNewsApi = axios.create({
 
 export const updateArticleVotes = (article_id, inc_votes) => {
     return ncNewsApi
-    .patch(`/api/articles/${article_id}`, { inc_votes:inc_votes});
+    .patch(`/api/articles/${article_id}`, { inc_votes: inc_votes })
+        .then(response => {
+           
+        })
+        .catch(error => {
+            
+            console.error("Error updating article votes:", error);
+            throw error; 
+        });
 };

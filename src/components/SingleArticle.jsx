@@ -1,26 +1,30 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getArticlesById } from '../Utils/getApi';
+import { getArticleById } from '../Utils/getApi';
 import Vote from './Vote'
 
 const SingleArticle = () => {
     const { article_id } = useParams();
     const [singleArticle, setSingleArticle] = useState({});
     const [loading, setLoading] = useState(true);
+    const [apiError, setApiError] = useState(null)
 
     useEffect(() => {
-        getArticlesById(article_id).then((data) => {
+        getArticleById(article_id).then((data) => {
             setSingleArticle(data);
             setLoading(false)
-        });
+        }).catch((err) =>{
+            setApiError(err)
+            setLoading(false)
+        })
     }, [article_id]);
 
     if(loading){
         return <div>Loading...</div>
-    }
-
-
-    return (
+    } else if (apiError){
+        return <Error message ={apiError.message}/>
+    } else{
+        return  (
         <div>
             <h2>{singleArticle.title}</h2>
             <Vote article_id={singleArticle.article_id}
@@ -32,6 +36,7 @@ const SingleArticle = () => {
 
         </div>
     );
+}
 };
 
 export default SingleArticle;

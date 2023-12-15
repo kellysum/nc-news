@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { postComment } from "../Utils/postApi";
 import { getCommentsByArticleId } from "../Utils/getApi";
 import { useParams } from "react-router-dom";
+import Error from "./Error";
 
 const CommentAdder = () => {
     const {article_id} = useParams()
@@ -60,10 +61,19 @@ const CommentAdder = () => {
                 value={addComments}
                 onChange={(event) => setAddComments(event.target.value)}
                 placeholder="Write your comments here..."
-            ></textarea>
-            <button onClick={handleSubmit} disabled={isPosting}>
-                {isPosting ? "Posting..." : "Post Comment"}
-            </button>
+            />
+            {addComments.length > 100 ? (
+    <Error message='Your comment is too long!' />
+    ) : (
+    <p>{`${100 - addComments.length} characters remaining`}</p>
+    )}
+
+    <button
+        onClick={handleSubmit}
+        disabled={isPosting || addComments.length > 100}>
+        {isPosting ? "Posting..." : "Post Comment"}
+    </button>
+
             {error && <p className="errormsg">{error}</p>}
            
         </div>
