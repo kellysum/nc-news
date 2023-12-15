@@ -57,7 +57,7 @@ const CommentAdder = () => {
     return (
         <div>
             <h3>Add Your Comments👇</h3>
-            <textarea
+            <textarea className="comment-box"
                 value={addComments}
                 onChange={(event) => setAddComments(event.target.value)}
                 placeholder="Write your comments here..."
@@ -68,7 +68,7 @@ const CommentAdder = () => {
     <p>{`${100 - addComments.length} characters remaining`}</p>
     )}
 
-    <button
+    <button className="post-comment-button"
         onClick={handleSubmit}
         disabled={isPosting || addComments.length > 100}>
         {isPosting ? "Posting..." : "Post Comment"}
